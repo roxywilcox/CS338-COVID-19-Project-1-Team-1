@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "react-practice-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,11 +8,9 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
-    "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
-    "react-chartjs-2": "file:src/react-chartjs-2",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },

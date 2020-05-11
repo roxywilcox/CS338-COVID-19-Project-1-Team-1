@@ -3,17 +3,17 @@
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { Polar } from "react-chartjs-2";
-import React, { useState, Component } from 'react';
+import React, { useState, Component } from "react";
 
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Toast from 'react-bootstrap/Toast';
-import Image from 'react-bootstrap/Image'
-import Button from 'react-bootstrap/Button';
+import Jumbotron from "react-bootstrap/Jumbotron";
+import Toast from "react-bootstrap/Toast";
+import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 // import { connect } from 'react-redux';
-import { Nav, Navbar, Container, Row, Col, Card } from 'react-bootstrap';
-import header_img from "./header.jpeg"
+import { Nav, Navbar, Container, Row, Col, Card } from "react-bootstrap";
+import header_img from "./header.jpeg";
 
-import './App.css';
+import "./App.css";
 
 const graph1 = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -156,20 +156,25 @@ function NavDropdownExample() {
       <Card className="text-center transparent-0 header-text">
         {/* <Card.Header>Featured</Card.Header> */}
         <Card.Body>
-          <Card.Title as="h1" >Covid-19</Card.Title>
+          <Card.Title as="h1">COVID-19</Card.Title>
           <Card.Text as="h3">
-            With supporting text below as a natural lead-in to additional content.
+            The Effect of Illinois Government Orders during COVID-19
           </Card.Text>
         </Card.Body>
       </Card>
 
       <Container fluid>
-        <Navbar className="transparent-40" variant="light" style={{ width: 800 }}>
+        <Navbar
+          className="transparent-40"
+          variant="light"
+          style={{ width: 800 }}
+        >
           {/* <Navbar.Brand href="#home">COVID-19</Navbar.Brand> */}
           <Nav justify variant="tabs" as="h5" defaultActiveKey="/home">
-            <Nav.Link href="/home">Tab1</Nav.Link>
-            <Nav.Link href="#features">Tab2</Nav.Link>
-            <Nav.Link href="#pricing">Tab3</Nav.Link>
+            <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link href="#features">Number of Cases</Nav.Link>
+            <Nav.Link href="#pricing">Testing Conducted</Nav.Link>
+            <Nav.Link href="#??">Unemployment Claims</Nav.Link>
           </Nav>
         </Navbar>
       </Container>
@@ -186,13 +191,10 @@ function NavDropdownExample() {
         />
         <Polar data={graph3} />
       </Container>
-
     </Container>
   );
 }
 
-const App = () => (
-    <NavDropdownExample />
-);
+const App = () => <NavDropdownExample />;
 
 export default App;

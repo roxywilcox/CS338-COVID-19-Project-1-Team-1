@@ -1,6 +1,7 @@
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { Polar } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import React, { useState, Component } from "react";
 
 // import Jumbotron from "react-bootstrap/Jumbotron";
@@ -13,24 +14,31 @@ import { Nav, Navbar, Container, Row, Col, Card } from "react-bootstrap";
 
 import "./App.css";
 
-const graph1 = {
+const linegraphall = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
   datasets: [
     {
       label: "Number of Cases",
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(255,99,132,1)",
-      borderWidth: 3,
-      fill: false,
-      brderColor: "rgba(75,192,192,1)",
+      //backgroundColor: "rgba(75,192,192,0.2)",
+      //borderColor: "rgba(255,99,132,1)",
+      //borderWidth: 3,
       data: [2, 1, 2, 1, 1, 1],
+      fill: false,
+      borderColor: "#DC143C",
+    },
+    {
+      label: "Number of Tests Conducted",
+      data: [4, 5, 7, 10, 9, 10],
+      fill: false,
+      borderColor: "#006400",
     },
     {
       label: "Number of Unemployment Claims",
       data: [10, 20, 12, 15, 10, 15],
       fill: false,
-      borderColor: "#742774",
+      borderColor: "#00008B",
     },
+    //<Options />,
     /* display: true,
   labelString: "Number of Cases",
   lineHeight: 1.2,
@@ -42,17 +50,56 @@ const graph1 = {
   ],
 };
 
-const graph2 = {
+const linegraphcases = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "Number of Cases",
+      //backgroundColor: "rgba(75,192,192,0.2)",
+      //borderColor: "rgba(255,99,132,1)",
+      //borderWidth: 3,
+      data: [2, 1, 2, 1, 1, 1],
+      fill: false,
+      borderColor: "#DC143C",
+    },
+  ],
+};
+
+const linegraphtesting = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "Number of Tests Conducted",
+      data: [4, 5, 7, 10, 9, 10],
+      fill: false,
+      borderColor: "#006400",
+    },
+  ],
+};
+
+const linegraphunemployment = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "Number of Unemployment Claims Filed",
+      data: [10, 20, 12, 15, 10, 15],
+      fill: false,
+      borderColor: "#00008B",
+    },
+  ],
+};
+
+const bargraphcases = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
   datasets: [
     {
       label: "Number of Cases",
       data: [1, 3, 6, 10, 20, 36],
-      backgroundColor: "rgba(255,99,132,0.2)",
-      borderColor: "rgba(255,99,132,1)",
+      backgroundColor: "#DC143C",
+      borderColor: "DC143C",
       borderWidth: 1,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
+      hoverBackgroundColor: "#CD5C5C",
+      hoverBorderColor: "#CD5C5C",
       display: true,
       labelString: "Number of Cases",
       lineHeight: 1.2,
@@ -65,11 +112,68 @@ const graph2 = {
   ],
 };
 
-const graph3 = {
+const bargraphtesting = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "Number of Tests Conducted",
+      data: [1, 3, 6, 10, 20, 36],
+      backgroundColor: "#006400",
+      borderColor: "#006400",
+      borderWidth: 1,
+      hoverBackgroundColor: "#8FBC8F",
+      hoverBorderColor: "#8FBC8F",
+      display: true,
+      labelString: "Number of Cases",
+      lineHeight: 1.2,
+      fontColor: "#666",
+      fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+      fontSize: 12,
+      fontStyle: "normal",
+      padding: 4,
+    },
+  ],
+};
+
+const bargraphunemployment = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "Number of Unemployment Claims Filed",
+      data: [1, 3, 6, 10, 20, 36],
+      backgroundColor: "#00008B",
+      borderColor: "#00008B",
+      borderWidth: 1,
+      hoverBackgroundColor: "#6495ED",
+      hoverBorderColor: "#6495ED",
+      display: true,
+      labelString: "Number of Cases",
+      lineHeight: 1.2,
+      fontColor: "#666",
+      fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+      fontSize: 12,
+      fontStyle: "normal",
+      padding: 4,
+    },
+  ],
+};
+
+const polarchartall = {
   datasets: [
     {
       data: [10, 20, 30],
-      backgroundColor: ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"],
+      backgroundColor: ["#DC143C", "#006400", "#00008B", "#E7E9ED", "#36A2EB"],
+      label: "Effects of Govt Orders in June 2020, IL", // for legend
+    },
+  ],
+  labels: ["Number of Cases", "Tests Conducted", "Unemployment Claims"],
+};
+
+const doughnutchartall = {
+  datasets: [
+    {
+      data: [10, 20, 30],
+      backgroundColor: ["#DC143C", "#006400", "#00008B", "#E7E9ED", "#36A2EB"],
       label: "Effects of Govt Orders in June 2020, IL", // for legend
     },
   ],
@@ -212,22 +316,30 @@ class TabContent extends React.Component {
     return (
       <Container fluid>
         {this.props.activeTab.name === TabName[0] ? (
-          <section className="panel panel-danger">
-            <h2 className="panel-heading">Home</h2>
-            <p className="panel-body">
-              State government Stay-At-Home orders have been one of the
-              strongest agents against the spread of COVID-19, but also one of
-              the most controversial. In order to examine their impact, we must
-              look at how the modifications in orders have affected each state.
-              The largest concerns surrounding COVID-19 are associated with the
-              increase in cases, a lack in testing, and the crumbling economy.
-              These visualizations, starting with Illinois, plot the extent of
-              Stay-At-Home orders against these three factors. The data can
-              provide an understanding of which orders and modifications affect
-              what and by how much. The conclusions can be used to shape orders
-              and action for COVID-19 and future pandemics.
-            </p>
-          </section>
+          <Container fluid>
+            <section className="panel panel-danger">
+              <h2 className="panel-heading">Home</h2>
+              <p className="panel-body">
+                State government Stay-At-Home orders have been one of the
+                strongest agents against the spread of COVID-19, but also one of
+                the most controversial. In order to examine their impact, we
+                must look at how the modifications in orders have affected each
+                state. The largest concerns surrounding COVID-19 are associated
+                with the increase in cases, a lack in testing, and the crumbling
+                economy. These visualizations, starting with Illinois, plot the
+                extent of Stay-At-Home orders against these three factors. The
+                data can provide an understanding of which orders and
+                modifications affect what and by how much. The conclusions can
+                be used to shape orders and action for COVID-19 and future
+                pandemics.
+              </p>
+            </section>
+            <Container fluid>
+              <Line data={linegraphall} />
+              {/* <Polar data={polarchartall} /> */}
+              <Doughnut data={doughnutchartall} />
+            </Container>
+          </Container>
         ) : null}
         {this.props.activeTab.name === TabName[1] ? (
           <Container fluid>
@@ -239,7 +351,8 @@ class TabContent extends React.Component {
               </p>
             </section>
             <Container fluid>
-              <Line data={graph1} />
+              <Line data={linegraphcases} />
+              <Bar data={bargraphcases} />
             </Container>
           </Container>
         ) : null}
@@ -253,14 +366,15 @@ class TabContent extends React.Component {
               </p>
             </section>
             <Container fluid>
-              <Line data={graph1} />
-              <Bar
-                data={graph2}
+              <Line data={linegraphtesting} />
+              {/* <Bar
+                data={bargraphtesting}
                 width={100}
                 height={50}
                 options={{
                   maintainAspectRatio: false,
-                }}
+                }} */}
+              <Bar data={bargraphtesting} />
               />
             </Container>
           </Container>
@@ -275,7 +389,9 @@ class TabContent extends React.Component {
               </p>
             </section>
             <Container fluid>
-              <Polar data={graph3} />
+              {/* <Polar data={polarchartall} /> */}
+              <Line data={linegraphunemployment} />
+              <Bar data={bargraphunemployment} />
             </Container>
           </Container>
         ) : null}

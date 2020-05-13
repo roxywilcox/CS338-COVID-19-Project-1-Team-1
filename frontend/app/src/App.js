@@ -3,7 +3,6 @@ import { Bar } from "react-chartjs-2";
 import { Polar } from "react-chartjs-2";
 import React, { useState, Component } from "react";
 
-
 // import Jumbotron from "react-bootstrap/Jumbotron";
 // import Toast from "react-bootstrap/Toast";
 // import Image from "react-bootstrap/Image";
@@ -32,6 +31,14 @@ const graph1 = {
       fill: false,
       borderColor: "#742774",
     },
+    /* display: true,
+  labelString: "Number of Cases",
+  lineHeight: 1.2,
+  fontColor: "#666",
+  fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+  fontSize: 12,
+  fontStyle: "normal",
+  padding: 4, */
   ],
 };
 
@@ -46,6 +53,14 @@ const graph2 = {
       borderWidth: 1,
       hoverBackgroundColor: "rgba(255,99,132,0.4)",
       hoverBorderColor: "rgba(255,99,132,1)",
+      display: true,
+      labelString: "Number of Cases",
+      lineHeight: 1.2,
+      fontColor: "#666",
+      fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+      fontSize: 12,
+      fontStyle: "normal",
+      padding: 4,
     },
   ],
 };
@@ -146,35 +161,46 @@ class ChartsPage extends React.Component {
 export default ChartsPage;
 */
 // =======
-var TabName = ['Home', 'Number of Cases', 'Testing Conducted', 'Unemployment Claims' ];
+var TabName = [
+  "Home",
+  "Number of Cases",
+  "Testing Conducted",
+  "Unemployment Claims",
+];
 
 var TabData = [
   { name: TabName[0], isActive: true },
   { name: TabName[1], isActive: false },
   { name: TabName[2], isActive: false },
-  { name: TabName[3], isActive: false }
+  { name: TabName[3], isActive: false },
 ];
 
 class MyTabs extends React.Component {
   render() {
     return (
       <ul className="nav nav-tabs">
-        {TabData.map(function (tab) {
-          return (
-            <MyTab 
-              data={tab} 
-              isActive={this.props.activeTab === tab} 
-              handleClick={this.props.changeTab.bind(this, tab)} />
-          );
-        }.bind(this))}
+        {TabData.map(
+          function (tab) {
+            return (
+              <MyTab
+                data={tab}
+                isActive={this.props.activeTab === tab}
+                handleClick={this.props.changeTab.bind(this, tab)}
+              />
+            );
+          }.bind(this)
+        )}
       </ul>
-    )
+    );
   }
 }
 class MyTab extends React.Component {
   render() {
     return (
-      <li onClick={this.props.handleClick} className={this.props.isActive ? "active" : null}>
+      <li
+        onClick={this.props.handleClick}
+        className={this.props.isActive ? "active" : null}
+      >
         <a href="#">{this.props.data.name}</a>
       </li>
     );
@@ -185,31 +211,46 @@ class TabContent extends React.Component {
   render() {
     return (
       <Container fluid>
-        {this.props.activeTab.name === TabName[0] ?
+        {this.props.activeTab.name === TabName[0] ? (
           <section className="panel panel-danger">
             <h2 className="panel-heading">Home</h2>
-            <p className="panel-body">Bacon ham hock kevin boudin rump leberkas. Spare ribs kielbasa shankle hamburger tongue jerky pork chop bresaola. Shoulder pork belly short loin strip steak prosciutto frankfurter. Beef kevin t-bone venison pork belly meatball chuck short loin bresaola doner picanha. Cupim short ribs short loin brisket bacon rump porchetta venison t-bone drumstick pork chop hamburger meatball. Pork loin frankfurter shankle pork picanha pastrami. Pork loin pancetta venison short loin frankfurter.</p>
-           
+            <p className="panel-body">
+              State government Stay-At-Home orders have been one of the
+              strongest agents against the spread of COVID-19, but also one of
+              the most controversial. In order to examine their impact, we must
+              look at how the modifications in orders have affected each state.
+              The largest concerns surrounding COVID-19 are associated with the
+              increase in cases, a lack in testing, and the crumbling economy.
+              These visualizations, starting with Illinois, plot the extent of
+              Stay-At-Home orders against these three factors. The data can
+              provide an understanding of which orders and modifications affect
+              what and by how much. The conclusions can be used to shape orders
+              and action for COVID-19 and future pandemics.
+            </p>
           </section>
-          : null}
-        {this.props.activeTab.name === TabName[1] ?
+        ) : null}
+        {this.props.activeTab.name === TabName[1] ? (
           <Container fluid>
             <section className="panel panel-danger">
               <h2 className="panel-heading">Number of Cases</h2>
-              <p className="panel-body">Atlantic herring jellynose fish Siamese fighting fish pollock: cobbler snakehead sea raven! Freshwater shark sergeant major clingfish sweeper galjoen fish mudfish longjaw mudsucker. Death Valley pupfish pomfret electric ray zingel African glass catfish squawfish yellowtail snapper grunt sculpin.</p>
-              
+              <p className="panel-body">
+                These visualizations highlight the effects of Stay-At-Home
+                orders in regards to the number of COVID-19 cases.
+              </p>
             </section>
             <Container fluid>
               <Line data={graph1} />
             </Container>
           </Container>
-          : null}
-        {this.props.activeTab.name === TabName[2] ?
+        ) : null}
+        {this.props.activeTab.name === TabName[2] ? (
           <Container fluid>
             <section className="panel panel-danger">
               <h2 className="panel-heading">Testing Conducted</h2>
-              <p className="panel-body">Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.</p>
-              
+              <p className="panel-body">
+                These visualizations highlight the effects of Stay-At-Home
+                orders in regards to the amount of testing conducted.
+              </p>
             </section>
             <Container fluid>
               <Line data={graph1} />
@@ -223,30 +264,32 @@ class TabContent extends React.Component {
               />
             </Container>
           </Container>
-          : null}
-        {this.props.activeTab.name === TabName[3] ?
+        ) : null}
+        {this.props.activeTab.name === TabName[3] ? (
           <Container fluid>
             <section className="panel panel-danger">
               <h2 className="panel-heading">Unemployment Claims</h2>
-              <p className="panel-body">Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.</p>
-
+              <p className="panel-body">
+                These visualizations highlight the effects of Stay-At-Home
+                orders in regards to the number of unemployment claims filed.
+              </p>
             </section>
             <Container fluid>
               <Polar data={graph3} />
             </Container>
           </Container>
-          : null}
+        ) : null}
       </Container>
     );
   }
 }
 
-class Navv extends React.Component{
+class Navv extends React.Component {
   constructor(props) {
     super();
     this.state = {
       // Takes active tab from props if it is defined there
-      activeTab: TabData[0]
+      activeTab: TabData[0],
     };
 
     // Bind the handleSelect function already here (not in the render function)
@@ -255,7 +298,7 @@ class Navv extends React.Component{
 
   handleClick = (MyTab) => {
     this.setState({ activeTab: MyTab });
-  }
+  };
 
   render() {
     return (
@@ -278,7 +321,7 @@ function NavDropdownExample() {
         <Card.Body>
           <Card.Title as="h1">COVID-19</Card.Title>
           <Card.Text as="h3">
-            The Effect of Illinois Government Orders during COVID-19
+            The Effect of State Government Orders during COVID-19
           </Card.Text>
         </Card.Body>
       </Card>

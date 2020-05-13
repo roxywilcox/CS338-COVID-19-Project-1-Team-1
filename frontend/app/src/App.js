@@ -1,17 +1,16 @@
-// import React from "react";
-
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { Polar } from "react-chartjs-2";
 import React, { useState, Component } from "react";
 
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Toast from "react-bootstrap/Toast";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
+
+// import Jumbotron from "react-bootstrap/Jumbotron";
+// import Toast from "react-bootstrap/Toast";
+// import Image from "react-bootstrap/Image";
+// import Button from "react-bootstrap/Button";
 // import { connect } from 'react-redux';
 import { Nav, Navbar, Container, Row, Col, Card } from "react-bootstrap";
-import header_img from "./header.jpeg";
+// import header_img from "./header.jpeg";
 
 import "./App.css";
 
@@ -147,6 +146,127 @@ class ChartsPage extends React.Component {
 export default ChartsPage;
 */
 // =======
+var TabName = ['Home', 'Number of Cases', 'Testing Conducted', 'Unemployment Claims' ];
+
+var TabData = [
+  { name: TabName[0], isActive: true },
+  { name: TabName[1], isActive: false },
+  { name: TabName[2], isActive: false },
+  { name: TabName[3], isActive: false }
+];
+
+class MyTabs extends React.Component {
+  render() {
+    return (
+      <ul className="nav nav-tabs">
+        {TabData.map(function (tab) {
+          return (
+            <MyTab 
+              data={tab} 
+              isActive={this.props.activeTab === tab} 
+              handleClick={this.props.changeTab.bind(this, tab)} />
+          );
+        }.bind(this))}
+      </ul>
+    )
+  }
+}
+class MyTab extends React.Component {
+  render() {
+    return (
+      <li onClick={this.props.handleClick} className={this.props.isActive ? "active" : null}>
+        <a href="#">{this.props.data.name}</a>
+      </li>
+    );
+  }
+}
+
+class TabContent extends React.Component {
+  render() {
+    return (
+      <Container fluid>
+        {this.props.activeTab.name === TabName[0] ?
+          <section className="panel panel-danger">
+            <h2 className="panel-heading">Home</h2>
+            <p className="panel-body">Bacon ham hock kevin boudin rump leberkas. Spare ribs kielbasa shankle hamburger tongue jerky pork chop bresaola. Shoulder pork belly short loin strip steak prosciutto frankfurter. Beef kevin t-bone venison pork belly meatball chuck short loin bresaola doner picanha. Cupim short ribs short loin brisket bacon rump porchetta venison t-bone drumstick pork chop hamburger meatball. Pork loin frankfurter shankle pork picanha pastrami. Pork loin pancetta venison short loin frankfurter.</p>
+           
+          </section>
+          : null}
+        {this.props.activeTab.name === TabName[1] ?
+          <Container fluid>
+            <section className="panel panel-danger">
+              <h2 className="panel-heading">Number of Cases</h2>
+              <p className="panel-body">Atlantic herring jellynose fish Siamese fighting fish pollock: cobbler snakehead sea raven! Freshwater shark sergeant major clingfish sweeper galjoen fish mudfish longjaw mudsucker. Death Valley pupfish pomfret electric ray zingel African glass catfish squawfish yellowtail snapper grunt sculpin.</p>
+              
+            </section>
+            <Container fluid>
+              <Line data={graph1} />
+            </Container>
+          </Container>
+          : null}
+        {this.props.activeTab.name === TabName[2] ?
+          <Container fluid>
+            <section className="panel panel-danger">
+              <h2 className="panel-heading">Testing Conducted</h2>
+              <p className="panel-body">Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.</p>
+              
+            </section>
+            <Container fluid>
+              <Line data={graph1} />
+              <Bar
+                data={graph2}
+                width={100}
+                height={50}
+                options={{
+                  maintainAspectRatio: false,
+                }}
+              />
+            </Container>
+          </Container>
+          : null}
+        {this.props.activeTab.name === TabName[3] ?
+          <Container fluid>
+            <section className="panel panel-danger">
+              <h2 className="panel-heading">Unemployment Claims</h2>
+              <p className="panel-body">Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.</p>
+
+            </section>
+            <Container fluid>
+              <Polar data={graph3} />
+            </Container>
+          </Container>
+          : null}
+      </Container>
+    );
+  }
+}
+
+class Navv extends React.Component{
+  constructor(props) {
+    super();
+    this.state = {
+      // Takes active tab from props if it is defined there
+      activeTab: TabData[0]
+    };
+
+    // Bind the handleSelect function already here (not in the render function)
+    // this.handleSelect = (tab) => this.setState({ activeTab: tab });
+  }
+
+  handleClick = (MyTab) => {
+    this.setState({ activeTab: MyTab });
+  }
+
+  render() {
+    return (
+      <Container fluid>
+        <MyTabs activeTab={this.state.activeTab} changeTab={this.handleClick} />
+        <TabContent activeTab={this.state.activeTab} />
+      </Container>
+    );
+  }
+}
+
 function NavDropdownExample() {
   const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
 
@@ -164,32 +284,7 @@ function NavDropdownExample() {
       </Card>
 
       <Container fluid>
-        <Navbar
-          className="transparent-40"
-          variant="light"
-          style={{ width: 800 }}
-        >
-          {/* <Navbar.Brand href="#home">COVID-19</Navbar.Brand> */}
-          <Nav justify variant="tabs" as="h5" defaultActiveKey="/home">
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="#features">Number of Cases</Nav.Link>
-            <Nav.Link href="#pricing">Testing Conducted</Nav.Link>
-            <Nav.Link href="#??">Unemployment Claims</Nav.Link>
-          </Nav>
-        </Navbar>
-      </Container>
-
-      <Container fluid>
-        <Line data={graph1} />
-        <Bar
-          data={graph2}
-          width={100}
-          height={50}
-          options={{
-            maintainAspectRatio: false,
-          }}
-        />
-        <Polar data={graph3} />
+        <Navv />
       </Container>
     </Container>
   );

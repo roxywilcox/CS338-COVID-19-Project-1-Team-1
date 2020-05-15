@@ -180,6 +180,13 @@ const doughnutchartall = {
   labels: ["Number of Cases", "Tests Conducted", "Unemployment Claims"],
 };
 
+/* const timeline = {
+  rectangle: {
+    width: "80px",
+    height: "10px",
+  },
+}; */
+
 // export default function App() {
 //   return (
 //     <div className="App">
@@ -337,6 +344,7 @@ class TabContent extends React.Component {
             <Container fluid>
               <Line data={linegraphall} />
               {/* <Polar data={polarchartall} /> */}
+              <div className="timelinepart1" />
               <Doughnut data={doughnutchartall} />
             </Container>
           </Container>
@@ -352,7 +360,9 @@ class TabContent extends React.Component {
             </section>
             <Container fluid>
               <Line data={linegraphcases} />
+              <div className="timelinepart1" />
               <Bar data={bargraphcases} />
+              <div className="timelinepart1" />
             </Container>
           </Container>
         ) : null}
@@ -367,14 +377,9 @@ class TabContent extends React.Component {
             </section>
             <Container fluid>
               <Line data={linegraphtesting} />
-              {/* <Bar
-                data={bargraphtesting}
-                width={100}
-                height={50}
-                options={{
-                  maintainAspectRatio: false,
-                }} */}
+              <div className="timelinepart1" />
               <Bar data={bargraphtesting} />
+              <div className="timelinepart1" />
               />
             </Container>
           </Container>
@@ -391,7 +396,9 @@ class TabContent extends React.Component {
             <Container fluid>
               {/* <Polar data={polarchartall} /> */}
               <Line data={linegraphunemployment} />
+              <div className="timelinepart1" />
               <Bar data={bargraphunemployment} />
+              <div className="timelinepart1" />
             </Container>
           </Container>
         ) : null}

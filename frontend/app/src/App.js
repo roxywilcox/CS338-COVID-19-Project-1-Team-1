@@ -3,14 +3,15 @@ import { Bar } from "react-chartjs-2";
 import { Polar } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
 import React, { useState, Component } from "react";
+import { Nav, Navbar, Container, Row, Col, Card } from "react-bootstrap";
+import TimeSeriesChart from "./components/TimeSeriesChart"
 
+// import header_img from "./header.jpeg";
 // import Jumbotron from "react-bootstrap/Jumbotron";
 // import Toast from "react-bootstrap/Toast";
 // import Image from "react-bootstrap/Image";
 // import Button from "react-bootstrap/Button";
 // import { connect } from 'react-redux';
-import { Nav, Navbar, Container, Row, Col, Card } from "react-bootstrap";
-// import header_img from "./header.jpeg";
 
 import "./App.css";
 
@@ -273,10 +274,10 @@ export default ChartsPage;
 */
 // =======
 var TabName = [
-  "Home",
-  "Number of Cases",
-  "Testing Conducted",
-  "Unemployment Claims",
+  "Project Overview",
+  "Impact on Cases",
+  "Impact on Testing",
+  "Impact on Unemployment",
 ];
 
 var TabData = [
@@ -321,20 +322,20 @@ class MyTab extends React.Component {
 class TabContent extends React.Component {
   render() {
     return (
-      <Container fluid>
+      <Container className="content">
         {this.props.activeTab.name === TabName[0] ? (
           <Container fluid>
             <section className="panel panel-danger">
-              <h2 className="panel-heading">Home</h2>
+              <h2 className="panel-heading">Project Overview</h2>
               <p className="panel-body">
-                State government Stay-At-Home orders have been one of the
+                State government stay-at-home orders have been one of the
                 strongest agents against the spread of COVID-19, but also one of
                 the most controversial. In order to examine their impact, we
                 must look at how the modifications in orders have affected each
                 state. The largest concerns surrounding COVID-19 are associated
                 with the increase in cases, a lack in testing, and the crumbling
                 economy. These visualizations, starting with Illinois, plot the
-                extent of Stay-At-Home orders against these three factors. The
+                extent of stay-at-home orders against these three factors. The
                 data can provide an understanding of which orders and
                 modifications affect what and by how much. The conclusions can
                 be used to shape orders and action for COVID-19 and future
@@ -342,44 +343,51 @@ class TabContent extends React.Component {
               </p>
             </section>
             <Container fluid>
-              <Line data={linegraphall} />
-              {/* <Polar data={polarchartall} /> */}
-              <div className="timelinepart1" />
-              <Doughnut data={doughnutchartall} />
+              <div className="spacing"/>
+              <Line data={linegraphall}/>
+              <div className="graphspacing"/>
+              <Doughnut data={doughnutchartall}/> 
+              <div className="graphspacing"/>
             </Container>
           </Container>
         ) : null}
         {this.props.activeTab.name === TabName[1] ? (
           <Container fluid>
             <section className="panel panel-danger">
-              <h2 className="panel-heading">Number of Cases</h2>
+              <h2 className="panel-heading">Comparing State Orders with Number of Cases</h2>
               <p className="panel-body">
                 These visualizations highlight the effects of Stay-At-Home
                 orders in regards to the number of COVID-19 cases.
               </p>
             </section>
             <Container fluid>
+              <div className="spacing"/>
+              <TimeSeriesChart type="CASES"/>
+              <div className="graphspacing"/>
               <Line data={linegraphcases} />
-              <div className="timelinepart1" />
+              <div className="graphspacing"/>
               <Bar data={bargraphcases} />
-              <div className="timelinepart1" />
+              <div className="graphspacing"/>
             </Container>
           </Container>
         ) : null}
         {this.props.activeTab.name === TabName[2] ? (
           <Container fluid>
             <section className="panel panel-danger">
-              <h2 className="panel-heading">Testing Conducted</h2>
+              <h2 className="panel-heading">Comparing State Orders with Testing Conducted</h2>
               <p className="panel-body">
                 These visualizations highlight the effects of Stay-At-Home
                 orders in regards to the amount of testing conducted.
               </p>
             </section>
             <Container fluid>
+              <div className="spacing"/>
+              <TimeSeriesChart type="TESTING"/>
+              <div className="graphspacing"/>
               <Line data={linegraphtesting} />
-              <div className="timelinepart1" />
+              <div className="graphspacing"/>
               <Bar data={bargraphtesting} />
-              <div className="timelinepart1" />
+              <div className="graphspacing"/>
               />
             </Container>
           </Container>
@@ -387,18 +395,20 @@ class TabContent extends React.Component {
         {this.props.activeTab.name === TabName[3] ? (
           <Container fluid>
             <section className="panel panel-danger">
-              <h2 className="panel-heading">Unemployment Claims</h2>
+              <h2 className="panel-heading">Comparing State Orders with Unemployment Claims</h2>
               <p className="panel-body">
                 These visualizations highlight the effects of Stay-At-Home
                 orders in regards to the number of unemployment claims filed.
               </p>
             </section>
             <Container fluid>
-              {/* <Polar data={polarchartall} /> */}
+              <div className="spacing"/>
+              <TimeSeriesChart type="UNEMPLOYMENT"/>
+              <div className="graphspacing"/>
               <Line data={linegraphunemployment} />
-              <div className="timelinepart1" />
+              <div className="graphspacing"/>
               <Bar data={bargraphunemployment} />
-              <div className="timelinepart1" />
+              <div className="graphspacing"/>
             </Container>
           </Container>
         ) : null}
@@ -442,9 +452,9 @@ function NavDropdownExample() {
       <Card className="text-center transparent-0 header-text">
         {/* <Card.Header>Featured</Card.Header> */}
         <Card.Body>
-          <Card.Title as="h1">COVID-19</Card.Title>
-          <Card.Text as="h3">
-            The Effect of State Government Orders during COVID-19
+          <Card.Title className="mainheader-text" as="h1">STATE ORDERS & COVID-19</Card.Title>
+          <Card.Text className="subheader-text" as="h3">
+            A collection of live data visualizations studying the impact of state goverment orders on COVID-19.
           </Card.Text>
         </Card.Body>
       </Card>

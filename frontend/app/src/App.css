@@ -1,0 +1,172 @@
+/* .App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #322834;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(255, 255, 255);
+}
+
+.App-link {
+  color: #fbd761;
+}
+.cookieImage {
+  height: 20vh;
+  width: 30vh;
+  border: 8px solid violet;
+  border-radius: 25px;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}*/
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+.header {
+  text-align: center;
+}
+
+.page-bg {
+  width: 100%;
+  height: 100%;
+  background-color: rosybrown;
+}
+
+.header-image-style {
+  /* background-color: rgb(78,46,130); */
+  background-image: url("./header.jpeg");
+  /* margin-bottom: 100px; */
+  height: 240px;
+  width: auto;
+  opacity: 0.8;
+  /* background-repeat: no-repeat; */
+  /* box-shadow: 5px 5px 2px 0px rgba(143,44,50); */
+}
+
+.transparent-0 {
+  background-color: rgba(245, 245, 245, 0) !important;
+}
+
+.transparent-40 {
+  background-color: rgba(245, 245, 245, 0.7) !important;
+}
+
+.header-text {
+  color: aliceblue;
+  margin-top: 30px;
+  margin-bottom: 70px;
+  border-radius: 0%;
+  display: flex;
+  align-items: center;
+}
+
+.mainheader-text {
+  font-weight: 700;
+}
+
+.subheader-text {
+    width: 600px;
+}
+
+/* .myClass ul > li > a {
+    background-color: gray;
+    color: white;
+} */
+
+/* Inactive tab */
+/* .nav-tabs ul > li > a {
+    background-color: white;
+    color: red;
+}
+.nav-tabs ul > li > a:hover {
+    background-color: pink;
+} */
+
+/* Active tab */
+.nav-tabs {
+  width: 85%;
+  margin: auto;
+}
+
+.nav-tabs ul > li.active > a,
+.nav-tabs ul > li.active > a:hover,
+.nav-tabs ul > li.active > a:focus {
+  background-color: red;
+  color: white;
+}
+
+/* Disabled tab */
+/* .myTab ul > li.disabled > a {
+    background-color: lightgray;
+    color: darkgray;
+} */
+
+.nav {
+  /* padding: 3px 0 0; */
+  background: rgba(245, 245, 245, 0.7) !important;
+  font-size: 1.3em !important;
+}
+.nav li > a {
+  color: rgb(110, 43, 43) !important;
+  /* font-weight: bold; */
+}
+
+.nav li.active > a,
+.nav li.active > a:hover,
+.nav li.active > a:focus {
+  color: rgb(243, 232, 232) !important;
+  background: rgb(110, 43, 43) !important;
+  /* font-size: 1.3em !important; */
+}
+
+/* .is-visible {
+  border: solid 1px red;
+} */
+section {
+  margin: 20px;
+}
+/* h2, p {
+  margin: 0;
+} */
+
+.timelinepart1 {
+  display: inline-block;
+  width: 750px;
+  height: 30px;
+  background: lightblue;
+  border-radius: 8px;
+  border-color: black;
+}
+
+.spacing {
+  height: 25px;
+}
+
+.graphspacing {
+  height: 100px;
+}

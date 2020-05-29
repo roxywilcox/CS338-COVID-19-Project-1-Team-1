@@ -37,6 +37,16 @@ class TimeSeriesChart extends React.Component {
             ["2020-04-13", 100],
             ["2020-04-14", 100],
             ["2020-04-15", 100],
+            ["2020-04-16", 100],
+            ["2020-04-17", 100],
+            ["2020-04-18", 100],
+            ["2020-04-19", 100],
+            ["2020-04-20", 100],
+            ["2020-04-21", 100],
+            ["2020-04-22", 100],
+            ["2020-04-23", 100],
+            ["2020-04-24", 100],
+            ["2020-04-25", 100],
         ];
 
         const timeseries = new TimeSeries({
@@ -52,13 +62,13 @@ class TimeSeriesChart extends React.Component {
             {
                 startTime: "2020-03-21",
                 endTime: "2020-04-07",
-                title: "Stay At Home",
+                title: "Phase 1: Initial Stay at Home Order. Essential businesses open only.",
                 key: "HOME"
             },
             {
                 startTime: "2020-04-07",
-                endTime: "2020-04-15",
-                title: "Stay At Home Extended",
+                endTime: "2020-04-29",
+                title: "Phase 2: Outdoor Activities Allowed. Non-essential businesses open for curbside pickup/delivery.",
                 key: "ESSENTIAL"
             },
         ];
@@ -103,8 +113,8 @@ class TimeSeriesChart extends React.Component {
                     type="swatch"
                     style={legendStyle}
                     categories={[
-                        { key: "HOME", label: "Stay At Home" },
-                        { key: "ESSENTIAL", label: "Stay At Home Extended" }
+                        { key: "HOME", label: "Phase 1: Initial Stay at Home Order" },
+                        { key: "ESSENTIAL", label: "Phase 2: Outdoor Activities Allowed" }
                     ]}
                 />
                 <div style={{height:"20px"}}/>

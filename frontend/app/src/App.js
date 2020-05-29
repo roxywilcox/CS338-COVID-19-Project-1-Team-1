@@ -289,7 +289,6 @@ class TabContent extends React.Component {
                         <Container fluid>
                             <Line id="line_graph" data={line_graph}/>
                             {/* <Polar data={polarchartall} /> */}
-                            <div className="timelinepart1"/>
                             <Doughnut data={doughnutchartall}/>
                         </Container>
                     </Container>
@@ -322,7 +321,7 @@ class TabContent extends React.Component {
                         </section>
                         <Container fluid>
                             <div className="spacing"/>
-                            <TimeSeriesChart type="CASES"/>
+                            <TimeSeriesChart type="TESTING"/>
                             <div className="graphspacing"/>
                             <Line data={line_graph_testing}/>
                             <div className="graphspacing"/>

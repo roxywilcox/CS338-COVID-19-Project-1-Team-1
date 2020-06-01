@@ -5,10 +5,37 @@ import { TimeSeries, Index, TimeRange, TimeRangeEvent } from "pondjs";
 class TimeSeriesChart extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            cases: [],
+            tested: []
+        };
     };
 
+    componentDidMount() {
+        fetch('http://127.0.0.1:5000/case', {mode: "cors"})
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    var cases = [], tested = [];
+                    for (var i = 0; i < result.length; i++) {
+                        var daily_case = [], daily_tested = [];
+                        //daily_case.push(Index.getIndexString("1d", new Date(result[i].date)), result[i].case);
+                        daily_case.push(result[i].date, result[i].case);
+                        cases.push(daily_case);
+                        daily_tested.push(result[i].date, result[i].test);
+                        tested.push(daily_tested);
+                    }
+                    this.setState({
+                        cases: cases,
+                        tested: tested
+                    });
+                },
+            )
+    }
+
     render() {
-        const data = [
+        const { cases, tested } = this.state;
+        const data1 = [
             ["2020-03-17", 1],
             ["2020-03-18", 1],
             ["2020-03-19", 1],
@@ -46,10 +73,10 @@ class TimeSeriesChart extends React.Component {
             ["2020-04-22", 100],
             ["2020-04-23", 100],
             ["2020-04-24", 100],
-            ["2020-04-25", 100],
+            ["2020-05-25", 100],
         ];
-
-        const timeseries = new TimeSeries({
+        const data = this.props.type === "CASES" ? cases: tested;
+        var timeseries = new TimeSeries({
             name: "case-data",
             columns: ["index", "num_cases"],
             points: data.map(([d, value]) => [
@@ -67,14 +94,22 @@ class TimeSeriesChart extends React.Component {
             },
             {
                 startTime: "2020-04-07",
-                endTime: "2020-04-29",
+                endTime: "2020-04-30",
                 title: "Phase 2: Outdoor Activities Allowed. Non-essential businesses open for curbside pickup/delivery.",
                 key: "ESSENTIAL"
+            },
+            {
+                startTime: "2020-04-30",
+                endTime: "2020-05-25",
+                title: "Phase 3: Outdoor Activities Allowed. All state parks will reopen on.",
+                key: "OPEN"
             },
         ];
 
         function ordersStyleCallback(event, state) {
-            const color = event.get("key") === "HOME" ? "#C8D5B8" : "#9BB8D7";
+            const color = event.get("key") === "HOME" ? "#C8D5B8"
+                                             : "ESSENTIAL" ? "#9BB8D7"
+                                             : "#FF8000";
             switch (state) {
                 case "normal":
                     return {
@@ -104,9 +139,9 @@ class TimeSeriesChart extends React.Component {
 
         const legendStyle = styler([
             { key: "HOME", color: "#C8D5B8" }, 
-            { key: "ESSENTIAL", color: "#9BB8D7" }
+            { key: "ESSENTIAL", color: "#9BB8D7" },
+            { key: "OPEN", color: "#FF8000" },
         ]);
-
         return (
             <div>
                 <Legend
@@ -114,22 +149,25 @@ class TimeSeriesChart extends React.Component {
                     style={legendStyle}
                     categories={[
                         { key: "HOME", label: "Phase 1: Initial Stay at Home Order" },
-                        { key: "ESSENTIAL", label: "Phase 2: Outdoor Activities Allowed" }
+                        { key: "ESSENTIAL", label: "Phase 2: Outdoor Activities Allowed" },
+                        { key: "OPEN", label: "Phase 3: All State Parks Reopen" }
                     ]}
                 />
                 <div style={{height:"20px"}}/>
-                <ChartContainer timeRange={timeseries.range()} width={1050}>
+                <ChartContainer timeRange={new TimeRange(new Date("2020-03-17"), new Date("2020-05-25"))} width={1050}>
                     <ChartRow height="200">
                         {this.props.type === "CASES" ? 
-                            (<YAxis id="axis1" label="Number of Cases (in thousands)" min={0} max={100} width="60" type="linear"/>) :
+                            (<YAxis id="axis1" label="Number of Cases (hundreds)" min={0} max={50} width="60" type="linear"/>) :
                             null
                         }
-                        {this.props.type === "TESTING" ? 
-                            (<YAxis id="axis1" label="Number of Tests Conducted (hundreds)" min={0} max={100} width="60" type="linear"/>) :
+                        {this.props.type === "TESTING" ?
+                            (<YAxis id="axis1" label="Number of Tests Conducted (hundreds)" min={0} max={300} width="60"
+                                    type="linear"/>) :
+
                             null
                         }
                         {this.props.type === "UNEMPLOYMENT" ? 
-                            (<YAxis id="axis1" label="Number of Unemployed (in thousands)" min={0} max={100} width="60" type="linear"/>) :
+                            (<YAxis id="axis1" label="Number of Unemployed (hundreds)" min={0} max={300} width="60" type="linear"/>) :
                             null
                         }
                         <Charts>

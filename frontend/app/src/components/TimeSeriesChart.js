@@ -95,21 +95,30 @@ class TimeSeriesChart extends React.Component {
             {
                 startTime: "2020-04-07",
                 endTime: "2020-04-30",
-                title: "Phase 2: Outdoor Activities Allowed. Non-essential businesses open for curbside pickup/delivery.",
+                title: "Phase 2: Outdoor Activities; Curbside pickup/delivery.",
                 key: "ESSENTIAL"
             },
             {
                 startTime: "2020-04-30",
                 endTime: "2020-05-25",
-                title: "Phase 3: Outdoor Activities Allowed. All state parks will reopen on.",
+                title: "Phase 3: All state parks will reopen.",
                 key: "OPEN"
             },
         ];
 
         function ordersStyleCallback(event, state) {
-            const color = event.get("key") === "HOME" ? "#C8D5B8"
-                                             : "ESSENTIAL" ? "#9BB8D7"
-                                             : "#FF8000";
+
+            let color
+            const key = event.get("key")
+
+            if (key === "HOME") {
+                color = "#C8D5B8"
+            } else if (key === "ESSENTIAL") {
+                color = "#9BB8D7"
+            } else {
+                color = "#FF8000"
+            }
+
             switch (state) {
                 case "normal":
                     return {

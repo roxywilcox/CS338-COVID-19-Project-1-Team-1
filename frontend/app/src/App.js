@@ -33,7 +33,7 @@ const line_graph_cases = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
         {
-            label: "Number of Daily confirmed",
+            label: "Number of Daily Confirmed Cases",
             //backgroundColor: "rgba(75,192,192,0.2)",
             //borderColor: "rgba(255,99,132,1)",
             //borderWidth: 3,
@@ -48,7 +48,7 @@ const line_graph_testing = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
         {
-            label: "Number of Tests Conducted",
+            label: "Number of Tests Conducted Daily",
             data: [4, 5, 7, 10, 9, 10],
             fill: false,
             borderColor: "#006400",
@@ -57,11 +57,11 @@ const line_graph_testing = {
 };
 
 const linegraphunemployment = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May"],
     datasets: [
         {
-            label: "Number of Unemployment Claims Filed",
-            data: [10, 20, 12, 15, 10, 15],
+            label: "Number of Unemployment Claims Filed per Month",
+            data: [227789, 218785, 264127, 1004365, 1302154],
             fill: false,
             borderColor: "#00008B",
         },
@@ -72,7 +72,7 @@ const bar_graph_cases = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
         {
-            label: "Number of Daily confirmed",
+            label: "Number of Daily Confirmed Cases",
             data: [1, 3, 6, 10, 20, 36],
             backgroundColor: "#DC143C",
             borderColor: "DC143C",
@@ -80,7 +80,7 @@ const bar_graph_cases = {
             hoverBackgroundColor: "#CD5C5C",
             hoverBorderColor: "#CD5C5C",
             display: true,
-            labelString: "Number of Cases",
+            labelString: "Number of Daily Confirmed Cases",
             lineHeight: 1.2,
             fontColor: "#666",
             fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
@@ -95,7 +95,7 @@ const bar_graph_testing = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
         {
-            label: "Number of Tests Conducted",
+            label: "Number of Daily Tests Conducted Daily",
             data: [1, 3, 6, 10, 20, 36],
             backgroundColor: "#006400",
             borderColor: "#006400",
@@ -103,7 +103,7 @@ const bar_graph_testing = {
             hoverBackgroundColor: "#8FBC8F",
             hoverBorderColor: "#8FBC8F",
             display: true,
-            labelString: "Number of Cases",
+            labelString: "Number of Daily Confirmed Cases",
             lineHeight: 1.2,
             fontColor: "#666",
             fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
@@ -115,18 +115,18 @@ const bar_graph_testing = {
 };
 
 const bargraphunemployment = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May"],
     datasets: [
         {
-            label: "Number of Unemployment Claims Filed",
-            data: [1, 3, 6, 10, 20, 36],
+            label: "Number of Unemployment Claims Filed per Month",
+            data: [227789, 218785, 264127, 1004365, 1302154],
             backgroundColor: "#00008B",
             borderColor: "#00008B",
             borderWidth: 1,
             hoverBackgroundColor: "#6495ED",
             hoverBorderColor: "#6495ED",
             display: true,
-            labelString: "Number of Cases",
+            labelString: "Number of Cases per Month",
             lineHeight: 1.2,
             fontColor: "#666",
             fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
@@ -145,10 +145,14 @@ const polarchartall = {
             label: "Effects of Govt Orders in June 2020, IL", // for legend
         },
     ],
-    labels: ["Number of Cases", "Tests Conducted", "Unemployment Claims"],
+    labels: [
+        "Total Number of Cases",
+        "Total Tests Conducted",
+        "Total Unemployment Claims",
+    ],
 };
 
-const doughnutchartall = {
+const doughnut_chart_all = {
     datasets: [
         {
             data: [10, 20, 30],
@@ -217,12 +221,13 @@ class TabContent extends React.Component {
             tested: [],
             date: [],
             daily_confirmed: [],
-            daily_tested: [],
         };
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:5000/case19', {mode: "cors"})
+        fetch('http://127.0.0.1:5000/case19', {
+            mode: "cors",
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -249,7 +254,7 @@ class TabContent extends React.Component {
                         error
                     });
                 }
-            )
+            );
     }
 
     render() {
@@ -265,6 +270,7 @@ class TabContent extends React.Component {
         line_graph_testing.datasets[0].data = daily_tested;
         bar_graph_testing.labels = date;
         bar_graph_testing.datasets[0].data = daily_tested;
+        doughnut_chart_all.datasets[0].data = [cases[cases.length - 1], tested[tested.length - 1], 2570646];
         return (
             <Container className="content">
                 {this.props.activeTab.name === TabName[0] ? (
@@ -287,9 +293,11 @@ class TabContent extends React.Component {
                             </p>
                         </section>
                         <Container fluid>
+                            <div className="spacing"/>
                             <Line id="line_graph" data={line_graph}/>
-                            {/* <Polar data={polarchartall} /> */}
-                            <Doughnut data={doughnutchartall}/>
+                            <div className="graphspacing"/>
+                            <Doughnut data={doughnut_chart_all}/>
+                            <div className="graphspacing"/>
                         </Container>
                     </Container>
                 ) : null}
@@ -303,6 +311,9 @@ class TabContent extends React.Component {
                             </p>
                         </section>
                         <Container fluid>
+                            <div className="spacing"/>
+                            <TimeSeriesChart type="CASES"/>
+                            <div className="graphspacing"/>
                             <Line data={line_graph_cases}/>
                             <div className="graphspacing"/>
                             <Bar data={bar_graph_cases}/>
@@ -341,7 +352,9 @@ class TabContent extends React.Component {
                             </p>
                         </section>
                         <Container fluid>
-                            {/* <Polar data={polarchartall} /> */}
+                            <div className="spacing"/>
+                            <TimeSeriesChart type="UNEMPLOYMENT"/>
+                            <div className="graphspacing"/>
                             <Line data={linegraphunemployment}/>
                             <div className="graphspacing"/>
                             <Bar data={bargraphunemployment}/>
@@ -389,10 +402,12 @@ function NavDropdownExample() {
             <Card className="text-center transparent-0 header-text">
                 {/* <Card.Header>Featured</Card.Header> */}
                 <Card.Body>
-                    <Card.Title className="mainheader-text" as="h1">STATE ORDERS & COVID-19</Card.Title>
+                    <Card.Title className="mainheader-text" as="h1">
+                        STATE ORDERS & COVID-19
+                    </Card.Title>
                     <Card.Text className="subheader-text" as="h3">
-                        A collection of live data visualizations studying the impact of state goverment orders on
-                        COVID-19.
+                        A collection of live data visualizations studying the impact of
+                        Illinois government orders on COVID-19.
                     </Card.Text>
                 </Card.Body>
             </Card>

@@ -65,13 +65,16 @@ def index():
 
 @app.route('/case', methods=['GET', 'POST'])
 def c_cases():
-    covids = session.query(Covid).filter_by(state="Illinois")[-31:-1]
+    covids = session.query(CovidCase).filter_by(state="IL")[:70:-1]
     msg = []
     for covid in covids:
-        temp = {"date": str(covid.date), "case": int(covid.cases)}
+        temp = {"date": str(covid.date)[:4] + "-" + str(covid.date)[4:6] + "-" + str(covid.date)[6:8],
+                "case": int(covid.positiveIncrease/100),
+                "test": int(covid.totalTestResultsIncrease/100)}
         msg.append(temp)
     response = make_response(jsonify(msg))
     response.headers['Access-Control-Allow-Origin'] = '*'
+    session.close()
     return response
 
 
@@ -81,13 +84,14 @@ def c_cases_19():
     msg = []
     for covid in covids:
         daily_case = {"date": covid.date, "case": int(covid.positive), "positiveIncrease": covid.positiveIncrease,
-                "totalTestResultsIncrease": covid.totalTestResultsIncrease, "totalTestResults": covid.totalTestResults}
+                      "totalTestResultsIncrease": covid.totalTestResultsIncrease,
+                      "totalTestResults": covid.totalTestResults}
         msg.append(daily_case)
     response = make_response(jsonify(msg))
     response.headers['Access-Control-Allow-Origin'] = '*'
+    session.close()
     return response
 
 
 if __name__ == '__main__':
-
     app.run('127.0.0.1', port=5000, debug=True)

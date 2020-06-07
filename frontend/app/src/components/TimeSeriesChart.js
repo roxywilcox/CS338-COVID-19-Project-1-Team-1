@@ -89,20 +89,32 @@ class TimeSeriesChart extends React.Component {
             {
                 startTime: "2020-03-21",
                 endTime: "2020-04-07",
-                title: "Phase 1: Initial Stay at Home Order. Essential businesses open only.",
+                title: "Phase 1",
                 key: "HOME"
             },
             {
                 startTime: "2020-04-07",
                 endTime: "2020-04-30",
-                title: "Phase 2: Outdoor Activities; Curbside pickup/delivery.",
+                title: "Phase 2",
                 key: "ESSENTIAL"
             },
             {
                 startTime: "2020-04-30",
-                endTime: "2020-05-25",
-                title: "Phase 3: All state parks will reopen.",
+                endTime: "2020-05-29",
+                title: "Phase 3",
                 key: "OPEN"
+            },
+            {
+                startTime: "2020-05-29",
+                endTime: "2020-06-03",
+                title: "Phase 3A",
+                key: "ILDINING"
+            },
+            {
+                startTime: "2020-06-03",
+                endTime: "2020-06-15",
+                title: "Phase 3B",
+                key: "CHIDINING"
             },
         ];
 
@@ -115,8 +127,12 @@ class TimeSeriesChart extends React.Component {
                 color = "#C8D5B8"
             } else if (key === "ESSENTIAL") {
                 color = "#9BB8D7"
-            } else {
+            } else if (key === "OPEN") {
                 color = "#FF8000"
+            } else if (key === "ILDINING") {
+                color = "#c0a7d1"
+            } else if (key === "CHIDINING") {
+                color = "#ffd1e1"
             }
 
             switch (state) {
@@ -124,13 +140,13 @@ class TimeSeriesChart extends React.Component {
                     return {
                         fill: color,
                         opacity: 0.4,
-                        height: 200,
+                        height: 300,
                     };
                 case "hover":
                     return {
                         fill: color,
                         opacity: 0.7,
-                        height: 200,
+                        height: 300,
                     };
                 case "selected":
                     return {
@@ -150,6 +166,8 @@ class TimeSeriesChart extends React.Component {
             { key: "HOME", color: "#C8D5B8" }, 
             { key: "ESSENTIAL", color: "#9BB8D7" },
             { key: "OPEN", color: "#FF8000" },
+            { key: "ILDINING", color: "#c0a7d1" },
+            { key: "CHIDINING", color: "#ffd1e1" },
         ]);
         return (
             <div>
@@ -159,12 +177,20 @@ class TimeSeriesChart extends React.Component {
                     categories={[
                         { key: "HOME", label: "Phase 1: Initial Stay at Home Order" },
                         { key: "ESSENTIAL", label: "Phase 2: Outdoor Activities Allowed" },
-                        { key: "OPEN", label: "Phase 3: All State Parks Reopen" }
+                        { key: "OPEN", label: "Phase 3: All State Parks Reopen" },
+                    ]}
+                />
+                <Legend
+                    type="swatch"
+                    style={legendStyle}
+                    categories={[
+                        { key: "ILDINING", label: "Phase 3A: Non-Chicago Outdoor Dining" },
+                        { key: "CHIDINING", label: "Phase 3B: Chicago Outdoor Dining" }
                     ]}
                 />
                 <div style={{height:"20px"}}/>
-                <ChartContainer timeRange={new TimeRange(new Date("2020-03-17"), new Date("2020-05-25"))} width={1050}>
-                    <ChartRow height="200">
+                <ChartContainer timeRange={new TimeRange(new Date("2020-03-15"), new Date("2020-06-15"))} width={1050}>
+                    <ChartRow height="300">
                         {this.props.type === "CASES" ? 
                             (<YAxis id="axis1" label="Number of Cases (hundreds)" min={0} max={50} width="60" type="linear"/>) :
                             null

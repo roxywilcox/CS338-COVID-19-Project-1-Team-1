@@ -36,46 +36,11 @@ class TimeSeriesChart extends React.Component {
     render() {
         const { cases, tested } = this.state;
         const data1 = [
-            ["2020-03-17", 1],
-            ["2020-03-18", 1],
-            ["2020-03-19", 1],
-            ["2020-03-20", 1],
-            ["2020-03-21", 2],
-            ["2020-03-22", 3],
-            ["2020-03-23", 5],
-            ["2020-03-25", 8],
-            ["2020-03-26", 11],
-            ["2020-03-27", 20],
-            ["2020-03-28", 27],
-            ["2020-03-29", 37],
-            ["2020-03-30", 50],
-            ["2020-03-31", 55],
-            ["2020-04-01", 60],
-            ["2020-04-02", 80],
-            ["2020-04-03", 85],
-            ["2020-04-04", 90],
-            ["2020-04-05", 91],
-            ["2020-04-06", 92],
-            ["2020-04-07", 93],
-            ["2020-04-08", 94],
-            ["2020-04-09", 100],
-            ["2020-04-11", 100],
-            ["2020-04-12", 100],
-            ["2020-04-13", 100],
-            ["2020-04-14", 100],
-            ["2020-04-15", 100],
-            ["2020-04-16", 100],
-            ["2020-04-17", 100],
-            ["2020-04-18", 100],
-            ["2020-04-19", 100],
-            ["2020-04-20", 100],
-            ["2020-04-21", 100],
-            ["2020-04-22", 100],
-            ["2020-04-23", 100],
-            ["2020-04-24", 100],
-            ["2020-05-25", 100],
+            ["2020-04-01", 264127],
+            ["2020-05-01", 1004365],
+            ["2020-06-01", 1302154],
         ];
-        const data = this.props.type === "CASES" ? cases: tested;
+        const data = this.props.type === "CASES" ? cases: this.props.type === "TESTING"? tested : data1;
         var timeseries = new TimeSeries({
             name: "case-data",
             columns: ["index", "num_cases"],
@@ -94,15 +59,9 @@ class TimeSeriesChart extends React.Component {
             },
             {
                 startTime: "2020-04-07",
-                endTime: "2020-04-30",
+                endTime: "2020-05-29",
                 title: "Phase 2",
                 key: "ESSENTIAL"
-            },
-            {
-                startTime: "2020-04-30",
-                endTime: "2020-05-29",
-                title: "Phase 3",
-                key: "OPEN"
             },
             {
                 startTime: "2020-05-29",
@@ -119,16 +78,13 @@ class TimeSeriesChart extends React.Component {
         ];
 
         function ordersStyleCallback(event, state) {
-
-            let color
-            const key = event.get("key")
+            let color;
+            const key = event.get("key");
 
             if (key === "HOME") {
                 color = "#C8D5B8"
             } else if (key === "ESSENTIAL") {
                 color = "#9BB8D7"
-            } else if (key === "OPEN") {
-                color = "#FF8000"
             } else if (key === "ILDINING") {
                 color = "#c0a7d1"
             } else if (key === "CHIDINING") {
@@ -165,7 +121,6 @@ class TimeSeriesChart extends React.Component {
         const legendStyle = styler([
             { key: "HOME", color: "#C8D5B8" }, 
             { key: "ESSENTIAL", color: "#9BB8D7" },
-            { key: "OPEN", color: "#FF8000" },
             { key: "ILDINING", color: "#c0a7d1" },
             { key: "CHIDINING", color: "#ffd1e1" },
         ]);
@@ -177,7 +132,6 @@ class TimeSeriesChart extends React.Component {
                     categories={[
                         { key: "HOME", label: "Phase 1: Initial Stay at Home Order" },
                         { key: "ESSENTIAL", label: "Phase 2: Outdoor Activities Allowed" },
-                        { key: "OPEN", label: "Phase 3: All State Parks Reopen" },
                     ]}
                 />
                 <Legend
@@ -189,7 +143,7 @@ class TimeSeriesChart extends React.Component {
                     ]}
                 />
                 <div style={{height:"20px"}}/>
-                <ChartContainer timeRange={new TimeRange(new Date("2020-03-15"), new Date("2020-06-15"))} width={1050}>
+                <ChartContainer timeRange={new TimeRange(new Date("2020-03-15"), new Date("2020-06-10"))} width={1050}>
                     <ChartRow height="300">
                         {this.props.type === "CASES" ? 
                             (<YAxis id="axis1" label="Number of Cases (hundreds)" min={0} max={50} width="60" type="linear"/>) :

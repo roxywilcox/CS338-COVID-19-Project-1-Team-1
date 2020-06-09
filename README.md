@@ -13,6 +13,7 @@ We designed our own end-to-end project, using the COVID-19 data that we ingested
 Following packages must be installed to run the project:
 
 - Backend:
+	- python3
 	- Mysql (or other database)
 	- flask
 	- sqlalchemy

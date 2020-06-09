@@ -32,9 +32,7 @@ Following packages must be installed to run the project:
 
 4. Run the frontend in frontend/app :
 
- ```bash
-npm start
-```
-
-
+	 ```bash
+	npm start
+	```
 

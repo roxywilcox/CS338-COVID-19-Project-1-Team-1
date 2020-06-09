@@ -5,6 +5,7 @@ import TimeSeriesChart from "./components/TimeSeriesChart";
 import "./App.css";
 
 const line_graph = {
+<<<<<<< HEAD
   labels: [],
   datasets: [
     {
@@ -27,6 +28,23 @@ const line_graph = {
     //    borderColor: "#00008B",
     //},
   ],
+=======
+    labels: [],
+    datasets: [
+        {
+            label: "Number of Cases",
+            data: [],
+            fill: false,
+            borderColor: "#DC143C",
+        },
+        {
+            label: "Number of Tests Conducted",
+            data: [],
+            fill: false,
+            borderColor: "#006400",
+        },
+    ],
+>>>>>>> 50818cfc00b4e8d8f12f6bfa275790f2c2d9d1e0
 };
 
 const line_graph_cases = {

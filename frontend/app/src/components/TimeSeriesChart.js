@@ -5,10 +5,40 @@ import { TimeSeries, Index, TimeRange, TimeRangeEvent } from "pondjs";
 class TimeSeriesChart extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            cases: [],
+            tested: []
+        };
     };
 
+    componentDidMount() {
+        fetch('http://127.0.0.1:5000/case', {mode: "cors"})
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    var cases = [], tested = [];
+                    for (var i = 0; i < result.length; i++) {
+                        var daily_case = [], daily_tested = [];
+                        //daily_case.push(Index.getIndexString("1d", new Date(result[i].date)), result[i].case);
+                        daily_case.push(result[i].date, result[i].case);
+                        cases.push(daily_case);
+                        daily_tested.push(result[i].date, result[i].test);
+                        tested.push(daily_tested);
+                    }
+                    this.setState({
+                        cases: cases,
+                        tested: tested
+                    });
+                },
+            )
+    }
+
     render() {
-        const data = [
+        const { cases, tested } = this.state;
+        const data1 = [
+            ["2020-03-17", 1],
+            ["2020-03-18", 1],
+            ["2020-03-19", 1],
             ["2020-03-20", 1],
             ["2020-03-21", 2],
             ["2020-03-22", 3],
@@ -22,12 +52,31 @@ class TimeSeriesChart extends React.Component {
             ["2020-03-31", 55],
             ["2020-04-01", 60],
             ["2020-04-02", 80],
-            ["2020-04-03", 100],
-            ["2020-04-04", 100],
-            ["2020-04-05", 100],
+            ["2020-04-03", 85],
+            ["2020-04-04", 90],
+            ["2020-04-05", 91],
+            ["2020-04-06", 92],
+            ["2020-04-07", 93],
+            ["2020-04-08", 94],
+            ["2020-04-09", 100],
+            ["2020-04-11", 100],
+            ["2020-04-12", 100],
+            ["2020-04-13", 100],
+            ["2020-04-14", 100],
+            ["2020-04-15", 100],
+            ["2020-04-16", 100],
+            ["2020-04-17", 100],
+            ["2020-04-18", 100],
+            ["2020-04-19", 100],
+            ["2020-04-20", 100],
+            ["2020-04-21", 100],
+            ["2020-04-22", 100],
+            ["2020-04-23", 100],
+            ["2020-04-24", 100],
+            ["2020-05-25", 100],
         ];
-
-        const timeseries = new TimeSeries({
+        const data = this.props.type === "CASES" ? cases: tested;
+        var timeseries = new TimeSeries({
             name: "case-data",
             columns: ["index", "num_cases"],
             points: data.map(([d, value]) => [
@@ -38,33 +87,66 @@ class TimeSeriesChart extends React.Component {
 
         const ordersData = [
             {
-                startTime: "2020-03-25",
-                endTime: "2020-03-28",
-                title: "Stay At Home Order",
+                startTime: "2020-03-21",
+                endTime: "2020-04-07",
+                title: "Phase 1",
                 key: "HOME"
             },
             {
-                startTime: "2020-04-01",
-                endTime: "2020-04-05",
-                title: "Essential Businesses Open",
+                startTime: "2020-04-07",
+                endTime: "2020-04-30",
+                title: "Phase 2",
                 key: "ESSENTIAL"
+            },
+            {
+                startTime: "2020-04-30",
+                endTime: "2020-05-29",
+                title: "Phase 3",
+                key: "OPEN"
+            },
+            {
+                startTime: "2020-05-29",
+                endTime: "2020-06-03",
+                title: "Phase 3A",
+                key: "ILDINING"
+            },
+            {
+                startTime: "2020-06-03",
+                endTime: "2020-06-15",
+                title: "Phase 3B",
+                key: "CHIDINING"
             },
         ];
 
         function ordersStyleCallback(event, state) {
-            const color = event.get("key") === "HOME" ? "#C8D5B8" : "#9BB8D7";
+
+            let color
+            const key = event.get("key")
+
+            if (key === "HOME") {
+                color = "#C8D5B8"
+            } else if (key === "ESSENTIAL") {
+                color = "#9BB8D7"
+            } else if (key === "OPEN") {
+                color = "#FF8000"
+            } else if (key === "ILDINING") {
+                color = "#c0a7d1"
+            } else if (key === "CHIDINING") {
+                color = "#ffd1e1"
+            }
+
             switch (state) {
                 case "normal":
                     return {
                         fill: color,
                         opacity: 0.4,
-                        height: 200,
+                        height: 300,
                     };
                 case "hover":
                     return {
                         fill: color,
                         opacity: 0.7,
-                        height: 200,
+                        height: 300,
                     };
                 case "selected":
                     return {
@@ -82,32 +164,45 @@ class TimeSeriesChart extends React.Component {
 
         const legendStyle = styler([
             { key: "HOME", color: "#C8D5B8" }, 
-            { key: "ESSENTIAL", color: "#9BB8D7" }
+            { key: "ESSENTIAL", color: "#9BB8D7" },
+            { key: "OPEN", color: "#FF8000" },
+            { key: "ILDINING", color: "#c0a7d1" },
+            { key: "CHIDINING", color: "#ffd1e1" },
         ]);
-
         return (
             <div>
                 <Legend
                     type="swatch"
                     style={legendStyle}
                     categories={[
-                        { key: "HOME", label: "Stay At Home Order" },
-                        { key: "ESSENTIAL", label: "Essential Businesses Open" }
+                        { key: "HOME", label: "Phase 1: Initial Stay at Home Order" },
+                        { key: "ESSENTIAL", label: "Phase 2: Outdoor Activities Allowed" },
+                        { key: "OPEN", label: "Phase 3: All State Parks Reopen" },
+                    ]}
+                />
+                <Legend
+                    type="swatch"
+                    style={legendStyle}
+                    categories={[
+                        { key: "ILDINING", label: "Phase 3A: Non-Chicago Outdoor Dining" },
+                        { key: "CHIDINING", label: "Phase 3B: Chicago Outdoor Dining" }
                     ]}
                 />
                 <div style={{height:"20px"}}/>
-                <ChartContainer timeRange={timeseries.range()} width={1050}>
-                    <ChartRow height="200">
+                <ChartContainer timeRange={new TimeRange(new Date("2020-03-15"), new Date("2020-06-15"))} width={1050}>
+                    <ChartRow height="300">
                         {this.props.type === "CASES" ? 
-                            (<YAxis id="axis1" label="Number of Cases (in thousands)" min={0} max={100} width="60" type="linear"/>) :
+                            (<YAxis id="axis1" label="Number of Cases (hundreds)" min={0} max={50} width="60" type="linear"/>) :
                             null
                         }
-                        {this.props.type === "TESTING" ? 
-                            (<YAxis id="axis1" label="Number of Tests Conducted (in thousands)" min={0} max={100} width="60" type="linear"/>) :
+                        {this.props.type === "TESTING" ?
+                            (<YAxis id="axis1" label="Number of Tests Conducted (hundreds)" min={0} max={300} width="60"
+                                    type="linear"/>) :
+
                             null
                         }
                         {this.props.type === "UNEMPLOYMENT" ? 
-                            (<YAxis id="axis1" label="Number of Unemployed (in thousands)" min={0} max={100} width="60" type="linear"/>) :
+                            (<YAxis id="axis1" label="Number of Unemployed (hundreds)" min={0} max={300} width="60" type="linear"/>) :
                             null
                         }
                         <Charts>

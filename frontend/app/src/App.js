@@ -20,12 +20,6 @@ const line_graph = {
             fill: false,
             borderColor: "#006400",
         },
-        {
-            label: "Number of Unemployment Claims",
-            data: [],
-            fill: false,
-            borderColor: "#00008B",
-        },
     ],
 };
 

@@ -2,12 +2,12 @@
 
 ## Project Goals
 
-We designed our own end-to-end project, using the COVID-19 data that we ingested, featuring visualizations on a webpage that portrayed the data in a way that would be accessible to the public. The goal of the web page was to compare Illinois state orders (such as lockdowns and various reopenings) with COVID-19 related data points, such as number of cases, number of unemployment claims filed, and number of tests conducted. These visualizations highlight the direct effects that government Stay-At-Home orders have on these factors. Our approach to implementation was to build out the data pipelines, create a functional front-end, and connect the data to the front-end with our own backend server. 
+Using the COVID-19 data that we ingested, we designed our own end-to-end project featuring visualizations on a webpage that portray the data in a way that is accessible to the public. The goal of the webpage is to compare Illinois state orders (such as lockdowns and various reopenings) with COVID-19 related data points, such as number of cases, number of unemployment claims filed, and number of tests conducted. These visualizations highlight the direct effects that government Stay-At-Home orders have on these factors. Our approach to implementation was to build out the data pipelines, create a functional front-end, and connect the data to the front-end with our own backend server. 
 
 ## File Descriptions
 * backend: load covid data from database to frontend webpage.
 * frontend/app: frontend webpage using react.
-* covid-data.csv: data we use in the project. Need to be imported to database locally.
+* covid-data.csv: data we use in the project. Needs to be imported to database locally.
 
 ## Installation
 Following packages must be installed to run the project:
